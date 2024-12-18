@@ -1,3 +1,6 @@
 *.pdf
 dummy.py
 .venv/
+
+# pycache
+__pycache__/
