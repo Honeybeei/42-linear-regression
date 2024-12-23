@@ -4,6 +4,7 @@ from utils.string_utils import color_string, Color
 from core.computation import get_optimized_start, get_trained_thetas, get_cost
 from core.constants import CoreConstants
 from utils.debug_tool import error_catcher
+from numpy import random
 
 
 @error_catcher
@@ -30,11 +31,36 @@ def main():
 
         learning_rate = CoreConstants.INITIAL_LEARNING_RATE
 
-        # Training loop -> saves trained thetas to a file
+        initial_theta0 = None
+        initial_theta1 = None
+        if CoreConstants.STARTING_TYPE == "optimized":
+            initial_theta0, initial_theta1 = get_optimized_start(dataset)
+        elif CoreConstants.STARTING_TYPE == "random":
+            initial_theta0 = random.randint(
+                low=CoreConstants.RANDOM_THETA0_MIN,
+                high=CoreConstants.RANDOM_THETA0_MAX,
+            )
+            initial_theta1 = (
+                random.rand()
+                * (CoreConstants.RANDOM_THETA1_MAX - CoreConstants.RANDOM_THETA1_MIN)
+                + CoreConstants.RANDOM_THETA1_MIN
+            )
+        elif CoreConstants.STARTING_TYPE == "zero":
+            initial_theta0 = 0
+            initial_theta1 = 0
+        else:
+            raise ValueError(
+                f"Invalid starting type: {CoreConstants.STARTING_TYPE}. Must be one of 'optimized', 'random', or 'zero'"
+            )
+        save_theta(initial_theta0, initial_theta1)
+
+        print("\nStarting training...")
+
         saved_theta_count = 0
         previous_cost = None
-        while True:
 
+        # Training loop -> saves trained thetas to a file
+        while True:
             # Get the latest thetas
             theta0, theta1 = get_latest_theta("./data/theta.csv")
 
@@ -58,9 +84,8 @@ def main():
                     )
                 )
                 # reset the data(thetas) and continue the training
-                reset_theta()
-                if CoreConstants.OPTIMIZED_START:
-                    save_theta(*get_optimized_start(dataset))
+                reset_theta(initial_theta0, initial_theta1)
+
                 saved_theta_count = 0
                 continue
 
@@ -74,7 +99,13 @@ def main():
                 cost_diff = abs(cost - previous_cost)
                 if cost_diff < CoreConstants.COST_DIFF_THRESHOLD:
                     # training is done
-                    print(color_string("\nTraining is done!", Color.GREEN))
+                    print(color_string("\nTraining is done! ", Color.GREEN))
+                    print(
+                        color_string(
+                            f"Optimal theta0: {trained_theta0} | Optimal theta1: {trained_theta1} | Cost: {cost}",
+                            Color.BLUE,
+                        )
+                    )
                     break
                 else:
                     color = None
@@ -91,7 +122,7 @@ def main():
                     # training is not done yet
                     print(
                         color_string(
-                            f"[{(saved_theta_count - 1):020}] theta0: {trained_theta0:>20.10f} | theta1: {trained_theta1:>20.10f} | cost diff: {cost_diff:>20.10f} |",
+                            f"[{(saved_theta_count - 1):010}] theta0: {trained_theta0:>16.8f} | theta1: {trained_theta1:>16.8f} | cost diff: {cost_diff:>16.8f} | cost: {cost:>16.8f}",
                             color=color,
                         )
                     )

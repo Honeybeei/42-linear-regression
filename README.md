@@ -18,6 +18,7 @@
     - [📝 Continuous theta logging and updating](#-continuous-theta-logging-and-updating)
     - [📉 Learning rate decay when overshooting](#-learning-rate-decay-when-overshooting)
     - [⚙️ Optimization at the beginning](#️-optimization-at-the-beginning)
+    - [🦾 Theta0 Acceleration](#-theta0-acceleration)
 
 ## 📘 Introduction
 
@@ -156,3 +157,7 @@ If the cost function increases after updating the parameters, which means it ove
 ### ⚙️ Optimization at the beginning
 
 Usually, the initial weights(thetas) are set to zero. Also the project document says that the initial weights should be set to zero. It will take a long time to converge if the initial weights are set to zero. So, I added a feature that initializes the weights by using the first and the last data points. By just drawing a line between the first and the last data points, we can get the initial weights. This will speed up the convergence process.
+
+### 🦾 Theta0 Acceleration
+
+While updating the parameters, the theta0 will be updated by `CoreConstants.THETA0_ACCELERATION_FACTOR` times the gradient of the cost function. This will speed up the convergence process. Also it turns out that this reduces the final cost value.

@@ -116,7 +116,7 @@ def get_latest_theta(path: str = THETA_FILE_PATH) -> Tuple[float, float]:
         return float(thetas[0]), float(thetas[1])
 
 
-def reset_theta(path: str = THETA_FILE_PATH):
+def reset_theta(theta0: float = 0, theta1: float = 0, path: str = THETA_FILE_PATH):
     """Reset theta0 and theta1 to 0 in a CSV file.
 
     Args:
@@ -130,4 +130,4 @@ def reset_theta(path: str = THETA_FILE_PATH):
         raise FileNotFoundError(f"Directory not found: {path}")
     with open(path, "w") as file:
         file.write("theta0,theta1\n")
-        file.write("0,0\n")
+        file.write(f"{theta0},{theta1}\n")

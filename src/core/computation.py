@@ -67,7 +67,12 @@ def get_trained_thetas(
         if previous_cost is not None and cost > previous_cost:
             raise ValueError("Overshooting detected: cost increased.")
         previous_cost = cost
-        new_theta0 = theta0 - learning_rate * grad0
+        if CoreConstants.USE_THETA0_ACCELERATION:
+            new_theta0 = (
+                theta0 - learning_rate * grad0 * CoreConstants.THETA0_ACCELERATION_RATE
+            )
+        else:
+            new_theta0 = theta0 - learning_rate * grad0
         new_theta1 = theta1 - learning_rate * grad1
         if print_iterations and i % CoreConstants.ITERATION_PRINT_INTERVAL == 0:
             print(f"\nIteration {i + 1}")
