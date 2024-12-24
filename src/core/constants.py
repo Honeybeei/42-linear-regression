@@ -15,8 +15,8 @@ class CoreConstants:
 
     RANDOM_THETA0_MIN: int = 6000
     RANDOM_THETA0_MAX: int = 10000
-    RANDOM_THETA1_MIN: float = -1
-    RANDOM_THETA1_MAX: float = 1
+    RANDOM_THETA1_MIN: float = -0.01
+    RANDOM_THETA1_MAX: float = 0
     # COST_DIFF_THRESHOLD = 0.0002  # when not using theta0 acceleration
     COST_DIFF_THRESHOLD = 0.000005
 
