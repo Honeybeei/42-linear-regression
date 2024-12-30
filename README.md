@@ -83,7 +83,7 @@ The Goal is to **minimize** the MSE by finding the optimal values for the parame
 
 ## 🔍 Gradient of the Cost Function
 
-Our main goal is to find the optimal values for the parameters $m$ and $b$ that minimize the cost function. Right? To minimize the cost function, we need figure out how to **update** the parameters $m$ and $b. This is where the **gradient** comes in.
+Our main goal is to find the optimal values for the parameters $m$ and $b$ that minimize the cost function. Right? To minimize the cost function, we need figure out how to **update** the parameters $m$ and $b$. This is where the **gradient** comes in.
 
 **Gradient** refers to information that tells us "which direction to move the parameters from their current position to reduce the loss."
 

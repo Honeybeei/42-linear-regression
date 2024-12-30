@@ -1,12 +1,14 @@
 from enum import Enum
 from utils import color_string, Color, get_latest_theta
-from core import get_price
+from core import get_price, Dataset, get_cost
+from utils.formatted_io import read_data
 from utils.terminal_utils import clear_terminal, display_exit_countdown, press_any_key
 
 
 class MenuChoice(Enum):
     PREDICT = "1"
-    EXIT = "2"
+    CALCULATE_PRECISION = "2"
+    EXIT = "3"
 
 
 def predict():
@@ -44,6 +46,23 @@ def predict():
     print(f"Estimated price: {estimated_price}")
 
 
+def calculate_precision():
+    milages, prices = read_data()
+    dataset = Dataset(milages, prices)
+    dataset.print_data()
+    theta0, theta1 = get_latest_theta()
+    cost = get_cost(dataset, theta0, theta1)
+    print("How cost is calculated: ")
+    print(
+        "Cost: The sum of the square of the difference between the predicted value and the actual value"
+    )
+    print(f"\nTheta0  : {theta0}")
+    print(f"Theta1  : {theta1}")
+    print(f"Cost    : {cost}")
+    print(f"\nYou can check the cost decrease when you train the model.")
+    print("")
+
+
 def main():
     try:
         while True:
@@ -53,12 +72,16 @@ def main():
 {color_string("Welcome to the prediction system", Color.BOLD)}
 
 [1] {color_string("Predict", Color.GREEN)}
-[2] {color_string("Exit", Color.BLUE)}
+[2] {color_string("Calculate precision", Color.YELLOW)}
+[3] {color_string("Exit", Color.BLUE)}
 """
             print(menu)
             choice = input(color_string("Enter choice: ", Color.BOLD))
             if choice == MenuChoice.PREDICT.value:
                 predict()
+                press_any_key()
+            elif choice == MenuChoice.CALCULATE_PRECISION.value:
+                calculate_precision()
                 press_any_key()
             elif choice == MenuChoice.EXIT.value:
                 display_exit_countdown(3)

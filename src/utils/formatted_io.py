@@ -1,11 +1,9 @@
 import os
 from typing import List, Tuple, TextIO
+from .constants import IOConstants
 
-DATA_DIR = "data"
-DATA_FILE = "data.csv"
-THETA_FILE = "theta.csv"
-DATA_FILE_PATH = os.path.join(DATA_DIR, DATA_FILE)
-THETA_FILE_PATH = os.path.join(DATA_DIR, THETA_FILE)
+DATA_FILE_PATH = os.path.join(IOConstants.DATA_DIR, IOConstants.DATA_FILE)
+THETA_FILE_PATH = os.path.join(IOConstants.DATA_DIR, IOConstants.THETA_FILE)
 
 
 def check_header(file: TextIO, expected_header: List[str]):
@@ -83,8 +81,11 @@ def save_theta(
         raise FileNotFoundError(f"Directory not found: {path}")
     with open(path, "r") as file:
         check_header(file, ["theta0", "theta1"])
-    with open(path, "a") as file:
-        file.write(f"{theta0},{theta1}\n")
+    if IOConstants.THETA_OVERWRITE:
+        reset_theta(theta0, theta1)
+    else:
+        with open(path, "a") as file:
+            file.write(f"{theta0},{theta1}\n")
 
 
 def get_latest_theta(path: str = THETA_FILE_PATH) -> Tuple[float, float]:

@@ -10,8 +10,8 @@ class CoreConstants:
     ITERATION_PRINT_INTERVAL: int = 1000
 
     # STARTING_TYPE: str = "optimized"
-    STARTING_TYPE: str = "random"
-    # STARTING_TYPE: str = "zero"
+    # STARTING_TYPE: str = "random"
+    STARTING_TYPE: str = "zero"
 
     RANDOM_THETA0_MIN: int = 6000
     RANDOM_THETA0_MAX: int = 10000
@@ -23,3 +23,5 @@ class CoreConstants:
     USE_THETA0_ACCELERATION: bool = True
     # USE_THETA0_ACCELERATION: bool = False
     THETA0_ACCELERATION_RATE: int = 100000
+
+    THETA_OVERWRITE: bool = False

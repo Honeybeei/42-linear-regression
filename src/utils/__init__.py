@@ -2,6 +2,7 @@ from .string_utils import Color, color_string
 from .formatted_io import read_data, save_theta, get_latest_theta, reset_theta
 from .debug_tool import error_catcher
 from .terminal_utils import clear_terminal, display_exit_countdown, press_any_key
+from .constants import IOConstants
 
 __all__ = [
     # string_utils
@@ -22,4 +23,6 @@ __all__ = [
     "clear_terminal",
     "display_exit_countdown",
     "press_any_key",
+    # constants
+    "IOConstants",
 ]
