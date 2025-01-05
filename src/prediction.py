@@ -59,7 +59,7 @@ def calculate_precision():
     print(f"\nTheta0  : {theta0}")
     print(f"Theta1  : {theta1}")
     print(f"Cost    : {cost}")
-    print(f"\nYou can check the cost decrease when you train the model.")
+    print("\nYou can check the cost decrease when you train the model.")
     print("")
 
 
