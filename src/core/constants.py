@@ -23,5 +23,3 @@ class CoreConstants:
     USE_THETA0_ACCELERATION: bool = True
     # USE_THETA0_ACCELERATION: bool = False
     THETA0_ACCELERATION_RATE: int = 100000
-
-    THETA_OVERWRITE: bool = False

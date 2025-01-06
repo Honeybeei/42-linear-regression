@@ -7,6 +7,7 @@ from visualizer.Line import Line
 from utils.terminal_utils import press_any_key
 from visualizer.constants import VisualizerConstants
 import time
+import matplotlib
 
 
 def main():
@@ -17,12 +18,14 @@ def main():
     press_any_key()
     # Read the latest theta values
     theta0, theta1 = get_latest_theta()
-
+    matplotlib.use("Qt5Agg")
     visualizer = Visualizer()
+    print("1" * 80)  # TODO: Remove this line
 
     for i in range(dataset.get_size()):
         dot = Dot(x=dataset.get_milage(i), y=dataset.get_price(i))
         visualizer.add_dot(dot)
+    print("2" * 80)  # TODO: Remove this line
     color_index = 0
     while True:
         try:
